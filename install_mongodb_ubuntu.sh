@@ -1,3 +1,6 @@
+#!/bin/bash
+
+main() {
 sudo apt-get install gnupg curl
 curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
    sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
@@ -13,3 +16,6 @@ echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
 echo "mongodb-org-tools hold" | sudo dpkg --set-selections
 sudo systemctl start mongod
 sudo systemctl enable mongod
+}
+
+main
