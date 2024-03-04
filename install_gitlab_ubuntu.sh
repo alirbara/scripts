@@ -9,7 +9,6 @@ main() {
     sudo apt-get install -y postfix
     
     curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
-    echo "Enter your GitLab domain: "
     read -p "Enter your GitLab domain: " DOMAIN
     sudo EXTERNAL_URL="https://$DOMAIN" apt-get install gitlab-ee
 }
