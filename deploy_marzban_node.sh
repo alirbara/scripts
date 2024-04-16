@@ -61,8 +61,38 @@ EOF
     docker compose up -d
 }
 
+deploy_haproxy() {
+  # Install
+  sudo apt update
+  sudo apt install -y haproxy
+  
+  # Input port
+  read -p "Enter Xray port number: " port
+  read -p "Enter subdomain only: " sub
+
+  # Write configs
+  cat <<EOF >> /etc/haproxy/haproxy.cfg
+listen front
+ mode tcp
+ bind *:443
+
+ tcp-request inspect-delay 5s
+ tcp-request content accept if { req_ssl_hello_type 1 }
+
+ use_backend xray if { req.ssl_sni -m end $sub.falconected.com }
+
+backend xray
+ mode tcp
+ server srv1 127.0.0.1:$port
+EOF
+
+  # Apply configs
+  sudo systemctl restart haproxy
+  sudo systemctl status haproxy
+
 main() {
     install
+    deploy_haproxy
 }
 
 main
