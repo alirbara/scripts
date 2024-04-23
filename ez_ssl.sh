@@ -6,7 +6,7 @@ main() {
     
     read -p "Enter the domain: " domain
 
-    certbot certonly --standalone --register-unsafely-without-email -d $domain
+    certbot certonly --standalone --agree-tos --register-unsafely-without-email -d $domain
 }
 
 main
